@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>StudyNotion</title>
+</head>
+<body>
+    <div class="main-container">
+
+        <!-- Heading -->
+        <div class="heading-div">
+            <h1 class="heading">StudyNotion - An EdTech Platform</h1>
+        </div>
+
+        <!-- Description -->
+        <div class="desc">
+            <p class="desc-header">Empower Your Future with <span id="highlight">Coding Skills</span></p>
+            <p class="desc-para">With our online coding courses, you can learn at your own pace, from anywhere in the world, and get access to a wealth of resources, including hands-on projects, quizzes, and personalized feedback from instructors.</p>
+        </div>
+
+
+        <!-- Courses -->
+        <div class="courses">
+            <div class="course">
+                <p class="course-header">Web Development</p>
+                <p class="course-desc">HTML, CSS, JS, ReactJs, NodeJs, Express Js</p>
+                <p class="course-price">Price: Rs999</p>
+                
+                <button class="buy-btn">Buy Now</button>
+                
+
+            </div>
+            <div class="course">
+                <p class="course-header">Web Development</p>
+                <p class="course-desc">HTML, CSS, JS, ReactJs, NodeJs, Express Js</p>
+                <p class="course-price">Price: Rs999</p>
+                
+                <button class="buy-btn">Buy Now</button>
+                
+
+            </div>
+            <div class="course">
+                <p class="course-header">Web Development</p>
+                <p class="course-desc">HTML, CSS, JS, ReactJs, NodeJs, Express Js</p>
+                <p class="course-price">Price: Rs999</p>
+                
+                <button class="buy-btn">Buy Now</button>
+                
+
+            </div>
+            <div class="course">
+                <p class="course-header">Web Development</p>
+                <p class="course-desc">HTML, CSS, JS, ReactJs, NodeJs, Express Js</p>
+                <p class="course-price">Price: Rs999</p>
+                
+                <button class="buy-btn">Buy Now</button>
+                
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="chat-container">
+            <p class="chat-heading">Chatbot</p>
+
+            <div id="chatbox">
+                <p class="bot">
+                    <b>Bot:</b> Hello! Welcome to StudyNotion EdTech Platform.
+                </p>
+            </div>
+
+            <div class="chat-btn-row">
+                <input type="text" id="userIp" placeholder="Ask your question...." />
+                <button class="sendBtn" onclick="sendMsg()">Send</button>
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="index.js"></script>
+</body>
+</html>
+
+
+
+<!-- This code implements a client-side, rule-based chatbot using JavaScript. In the context of the SPPU Artificial Intelligence curriculum, this is evaluated under **Expert Systems** and **Knowledge Representation** (*Unit 4/5*). A rule-based chatbot like this acts as an elementary **Production System** using an **If-Then Inference Engine**.
+
+Here are 15 tailored viva/oral questions specifically framed around how this code acts as an Expert System, along with its architectural strengths, limitations, and complexities.
+
+---
+
+## 💡 Category 1: Expert Systems & Production Rules
+
+### 1. How can this JavaScript code be mapped to the components of an AI "Expert System"?
+
+* **Answer:** An Expert System consists of three main parts:
+* **Knowledge Base:** The hardcoded conditional strings like `"course"`, `"fees"`, and `"placement"` represent the rules and facts provided by domain experts.
+* **Inference Engine:** The `if-else if-else` control structure acts as the reasoning mechanism that matches user input against the rules.
+* **User Interface:** The DOM manipulation (`document.getElementById`) acts as the user interface allowing users to input queries and view responses.
+
+
+
+### 2. What kind of reasoning strategy does this code use? Forward chaining or Backward chaining?
+
+* **Answer:** It uses a primitive form of **Forward Chaining**. It starts with the available user data (the input string) and moves forward through the conditional `if-else` rules to infer a final conclusion (the appropriate bot response).
+
+### 3. In AI, this layout can be called a "Production System". What are the components of a Production System?
+
+* **Answer:** A Production System consists of:
+* **Production Rules:** A set of *Condition-Action* rules (If *this keyword is present*, then *display this response*).
+* **Working Memory:** The variable `input` holding the processed user message.
+* **Recognize-Act Cycle:** The execution of the function `sendMsg()` which tests the memory against rules and acts by updating the UI.
+
+
+
+### 4. What is the "Conflict Resolution" strategy used in this program?
+
+* **Answer:** Conflict resolution is needed when multiple rules match the data. Because this code uses a standard `if-else if` ladder, it defaults to a **Strict Priority Strategy**. The rules are evaluated sequentially from top to bottom. The first condition that evaluates to `true` captures execution, and any lower rules that might also contain valid keywords are completely ignored.
+
+---
+
+## ⏱️ Category 2: Text Matching & NLP Limitations
+
+### 5. Your code uses `.includes()`. How does this limit its ability as an intelligent conversational agent?
+
+* **Answer:** The `.includes()` method checks for an exact substring match. It cannot parse semantics or context. For example, if a user types *"I want to know about your syllabus"*, the keyword `"course"` is missing, meaning it will completely fail to identify the intent and hit the default error block.
+
+### 6. What happens if a user types the keyword "chaining" inside the word "maintaining"?
+
+* **Answer:** Since `.includes()` looks for substring matches, typing *"maintaining"* will unexpectedly trigger any rule looking for the keyword *"main"*. This lack of word-boundary checking leads to false positives, which is a major drawback of basic string-matching expert systems.
+
+### 7. What is the Time and Space Complexity of an inference cycle in this code?
+
+* **Answer:**
+* **Time Complexity:** $O(N \times K)$, where $N$ is the length of the user input string and $K$ is the number of rules. Each `.includes()` scan runs in linear time across the input text.
+* **Space Complexity:** $O(N)$ to store the duplicated lowercase string in the `input` variable.
+
+
+
+---
+
+## 💻 Category 3: Code Architecture & Execution Flow
+
+### 8. Why are you creating two separate variables: `input` and `displayIp`?
+
+* **Answer:**
+* `input` is processed with `.toLowerCase()` to handle case normalization, making sure rules match regardless of user capitalization.
+* `displayIp` retains the exact phrasing, spacing, and casing entered by the user, ensuring that when their message is printed back to the chat log (`You: ...`), it mirrors their exact typing.
+
+
+
+### 9. What is the purpose of the line `document.getElementById("userIp").value = "";` at the very end?
+
+* **Answer:** This clears out the text entry field after processing is complete. From a User Experience (UX) perspective, it resets the input box so the user can immediately type their next query without having to manually backspace out their previous sentence.
+
+### 10. Why is the `else` block crucial in an Expert System context?
+
+* **Answer:** The `else` block serves as the **Fallback Rule**. In expert system theory, an agent must have a graceful path if the current working memory doesn't satisfy any condition in the knowledge base. Without it, the variable `response` would remain blank, causing a silent failure.
+
+---
+
+## 🎯 Category 4: System Scalability & AI Enhancements
+
+### 11. If this platform grows to support 500 different rules, why is maintaining this specific code file a bad idea?
+
+* **Answer:** Using a hardcoded `if-else` chain makes the codebase rigid, monolithic, and difficult to maintain. Adding, deleting, or altering rules becomes highly error-prone. To scale, the rules should be extracted into an external **Knowledge Base** file (like a JSON object mapping arrays of keywords to response text), which the engine can loop through dynamically.
+
+### 12. How could you separate the Knowledge Base from the Inference Engine in JavaScript?
+
+* **Answer:** I would create an array of objects to act as the knowledge base:
+```javascript
+const knowledgeBase = [
+  { keywords: ["hello", "hi"], response: "Hello! How can I help?" },
+  { keywords: ["fees", "cost"], response: "Prices start from Rs. 999." }
+];
+
+```
+
+
+The inference engine would then become a clean, reusable loop that iterates over this array, removing the need for a massive `if-else` ladder.
+
+### 13. How does this rule-based approach differ from modern Machine Learning chatbots?
+
+* **Answer:**
+* **Rule-Based Systems** are completely deterministic. They follow hardcoded paths and can only reply to explicit syntax patterns.
+* **Machine Learning Systems** use statistical classification models. They vectorize input text to determine the probabilistic intent of a sentence, allowing them to accurately comprehend variations they have never explicitly seen before.
+
+
+
+### 14. If a user inputs *"Can I get a refund if I don't like the course placement?"*, which rule will execute?
+
+* **Answer:** The `"course"` rule will execute. Even though the sentence contains the words `"refund"` and `"placement"`, the `"course"` validation block is positioned higher up the `if-else if` hierarchy. It matches first, cuts off further comparisons, and responds with the course list instead of answering the refund policy query.
+
+### 15. How could you upgrade the string-matching logic here to make it slightly smarter without using deep AI models?
+
+* **Answer:** You can swap out `.includes()` for **Regular Expressions (Regex)** using word boundaries (`\b`). For example, using `/\b(fees|price|cost)\b/g.test(input)` ensures that the system checks for standalone words, preventing accidental substring triggers from larger unrelated words.
+
+```
+
+``` -->
