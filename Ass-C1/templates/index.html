@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediScan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <header>
+        <span class="brand">MediScan</span>
+        <span class="tag">AI Diagnosis</span>
+    </header>
+
+    <main>
+        <h1>What symptoms<br>are you feeling?</h1>
+
+        <form action="/diagnose" method="post" id="form">
+            <div class="field">
+                <input
+                    type="text"
+                    name="symptoms"
+                    id="symptoms"
+                    placeholder="fever, cough, headache…"
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="chips">
+                <button type="button" class="chip" data-symptom="fever">fever</button>
+                <button type="button" class="chip" data-symptom="cough">cough</button>
+                <button type="button" class="chip" data-symptom="headache">headache</button>
+                <button type="button" class="chip" data-symptom="fatigue">fatigue</button>
+                <button type="button" class="chip" data-symptom="nausea">nausea</button>
+                <button type="button" class="chip" data-symptom="rash">rash</button>
+                <button type="button" class="chip" data-symptom="sore throat">sore throat</button>
+                <button type="button" class="chip" data-symptom="chest pain">chest pain</button>
+                <button type="button" class="chip" data-symptom="shortness of breath">shortness of breath</button>
+                <button type="button" class="chip" data-symptom="joint pain">joint pain</button>
+            </div>
+
+            <button type="submit" class="submit" id="submit">
+                <span>Diagnose</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+        </form>
+
+        {% if diagnosis %}
+        <div class="result" id="result">
+            <div class="result-top">
+                <span class="result-label">Diagnosis</span>
+                <div class="dot"></div>
+            </div>
+            <p class="result-disease">{{ diagnosis }}</p>
+            <p class="result-note">This is a preliminary result. Please consult a licensed physician.</p>
+        </div>
+        {% endif %}
+
+    </main>
+
+    <footer>MediScan &mdash; for informational use only</footer>
+
+</div>
+
+<script>
+    document.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', function() {
+            const input = document.getElementById('symptoms');
+            const val = input.value.trim();
+            const sym = this.dataset.symptom;
+            const existing = val ? val.split(',').map(s => s.trim()) : [];
+            if (!existing.includes(sym)) {
+                input.value = existing.length ? val + ', ' + sym : sym;
+                this.classList.add('active');
+            } else {
+                const updated = existing.filter(s => s !== sym).join(', ');
+                input.value = updated;
+                this.classList.remove('active');
+            }
+        });
+    });
+
+    document.getElementById('form').addEventListener('submit', function() {
+        const btn = document.getElementById('submit');
+        btn.querySelector('span').textContent = 'Analysing…';
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+    });
+</script>
+
+</body>
+</html>
